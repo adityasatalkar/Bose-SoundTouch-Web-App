@@ -12,20 +12,25 @@ let apis = {
         port:":8090",
         getUrl: (endpoint) => {
             return apis.boseSoundTouch.api + apis.boseSoundTouch.port + "/" + endpoint
+        },
+        getVolumeUrlBody: (endpoint, value) => {
+            return "<" + endpoint + ">" + value + "</"+endpoint+">"
+        },
+        getSourceUrlBody:(aux) => {
+        	return "<ContentItem source=" + aux + " sourceAccount=" + aux + 1 + "></ContentItem>"
+        },
+        getPowerUrlBody:(state, sender) => {
+        	return "<key state=" + state + " sender=" + sender + ">POWER</key>"
         }
     }
 };
 
-const sendCommand = (endpoint, value) => {
-	//	fetch('endpoint', {method: 'post', body: command});
-	console.log("Endpoint : " + endpoint)
-	console.log("Value : " + value)
-	var bodyOfRequest = "<" + endpoint + ">" + value + "</"+endpoint+">"
-	console.log(bodyOfRequest)
+const apiCall = (endpoint, bodyOfRequest) => {
+	console.log("Endpoint : " + endpoint + "\n" + "Body of Request : " + bodyOfRequest)
 	fetch(apis.boseSoundTouch.getUrl(endpoint), {method: 'post', body: bodyOfRequest})
         .then(response => response.text())
         .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-        .then(data => console.log(data))
+        .then(data => console.log(data))	
 }
 
 const power = () => {
@@ -33,32 +38,28 @@ const power = () => {
 	console.log('power');
 	var state = "press"
 	var sender = "Gabbo"
-	var bodyOfRequest = "<key state=" + state + " sender=" + sender+ ">POWER</key>"
-		fetch("http://192.168.1.15:8090/key", {method: 'post', body: bodyOfRequest})
-		.then(response => response.text())
-		.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-		.then(data => console.log(data))
+	var bodyOfRequest = apis.boseSoundTouch.getPowerUrlBody(state,sender)
+	apiCall('key', bodyOfRequest)
 };
 
 const source = () => {
 	// <ContentItem source="AUX" sourceAccount="AUX1"></ContentItem>
 	console.log('source');
 	var aux = "AUX"
-	var bodyOfRequest = "<ContentItem source="+aux+" sourceAccount="+aux+1+"></ContentItem>"
-	fetch("http://192.168.1.15:8090/select", {method: 'post', body: bodyOfRequest})
-		.then(response => response.text())
-		.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-		.then(data => console.log(data))
+	var bodyOfRequest = apis.boseSoundTouch.getSourceUrlBody(aux)
+	apiCall('select', bodyOfRequest)
 };
 
 const volUp = () => {
 	console.log('volUp');
-	sendCommand('volume',count++);
+	var bodyOfRequest =  apis.boseSoundTouch.getVolumeUrlBody('volume', count++)
+	apiCall('volume', bodyOfRequest)
 };
 
 const volDown = () => {
 	console.log('volDown');
-	sendCommand('volume',count--);
+	var bodyOfRequest =  apis.boseSoundTouch.getVolumeUrlBody('volume', count--)
+	apiCall('volume', bodyOfRequest)
 };
 
 powerButton.addEventListener('click', power);
