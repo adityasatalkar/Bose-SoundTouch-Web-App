@@ -23,7 +23,7 @@ Install SoundTouch App on your smartphone if you don't have it already. You'll n
 
 <!-- Link to [iOS App](https://itunes.apple.com/us/app/bose-soundtouch/id708379313?mt=8) and link to [Android App](https://play.google.com/store/apps/details?id=com.bose.soundtouch&hl=en_US) -->
 
-## Steps to execute the Java program :
+## Steps to execute the Web App :
 
 1. Connect to your device via the SoundTouch App.
 2. Once you've connected to the SoundTouch device via the app, go to setting of the device in the SoundTouch App
