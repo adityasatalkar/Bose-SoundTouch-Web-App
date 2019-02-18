@@ -62,6 +62,6 @@ For more such commands go to [Bose Developer Portal](https://developer.bose.com/
 
 <div>
 <center>
-<img alt='Bose SoundTouch Web App Screenshot' src='Bose remote.png'/></a>
+<img alt='Bose SoundTouch Web App Screenshot' src='https://github.com/ars75/Bose-SoundTouch-Web-App/blob/master/Bose%20Remote.png'/></a>
 </center>
 </div>
