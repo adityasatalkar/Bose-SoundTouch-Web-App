@@ -6,7 +6,7 @@ const volDownButton = document.getElementById('vol-down');
 var count = 0;
 
 let apis = {
-    boseSoundTouch: { 
+    boseSoundTouch: {
     //get user selected recomendation weather
         api:"http://192.168.1.15",
         port:":8090",
