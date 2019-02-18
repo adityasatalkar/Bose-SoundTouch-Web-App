@@ -33,6 +33,28 @@ const apiCall = (endpoint, bodyOfRequest) => {
         .then(data => console.log(data))	
 }
 
+const getVolume = (endpoint) => {
+    // parser = new DOMParser();
+    // xmlDoc
+    // fetch(apis.boseSoundTouch.getUrl(endpoint))
+    //     .then(response => response.text())
+    //     .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+    //     .then(data => console.log(data))
+    //     console.log(data = xmlDoc.getElementsByTagName("actualvolume")[0].childNodes[0].nodeValue)
+    var x = new XMLHttpRequest();
+    x.open("GET", apis.boseSoundTouch.getUrl(endpoint), true);
+    x.onreadystatechange = function () {
+      if (x.readyState == 4 && x.status == 200)
+      {
+        var doc = x.responseXML;
+        // …
+        var volume = doc.getElementsByTagName("volume")[0].getElementsByTagName("actualvolume")[0].firstChild.nodeValue;
+        console.log(volume)
+      }
+    };
+    x.send(null);
+}
+
 const power = () => {
 	// <key state="press" sender="Gabbo">POWER</key>
 	console.log('power');
@@ -52,6 +74,7 @@ const source = () => {
 
 const volUp = () => {
 	console.log('volUp');
+    getVolume('volume')
 	var bodyOfRequest =  apis.boseSoundTouch.getVolumeUrlBody('volume', count++)
 	apiCall('volume', bodyOfRequest)
 };
