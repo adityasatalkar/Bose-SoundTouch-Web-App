@@ -9,9 +9,6 @@ This webapp sets the volume of the SoundTouch device. Volume UP/Down. Lets you P
 * [JavaScript](https://www.javascript.com/)
 * [HTML](https://www.w3.org/)
 * [CSS](https://www.w3schools.com/css/)
-* [Okio](https://mvnrepository.com/artifact/com.squareup.okio/okio/2.1.0)
-* [JSON](https://mvnrepository.com/artifact/org.json/json/20180130)
-* [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.5)
 
 ## Download SoundTouch App to get IP Address of SoundTouch Device :
 
