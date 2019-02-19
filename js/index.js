@@ -5,8 +5,6 @@ const volUpButton = document.getElementById('vol-up');
 const volDownButton = document.getElementById('vol-down');
 const volMuteButton = document.getElementById('vol-mute');
 
-var count = 0;
-
 let apis = {
     boseSoundTouch: {
     //get user selected recomendation weather
@@ -30,29 +28,31 @@ let apis = {
     }
 };
 
-const apiCall = (endpoint, bodyOfRequest) => {
-	console.log("Endpoint : " + endpoint + "\n" + "Body of Request : " + bodyOfRequest)
-	fetch(apis.boseSoundTouch.getUrl(endpoint), {method: 'post', body: bodyOfRequest})
-        .then(response => response.text())
-        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-        .then(data => console.log(data))	
-}
-
-const getVolume = (endpoint) => {
+function getVolume(endpoint) {
     var doc = ""
-    var volume = ""
     console.log('getVolume')
     var xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.open("GET", apis.boseSoundTouch.getUrl(endpoint), true);
     xmlHttpRequest.onreadystatechange = function() {
         if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
             doc = xmlHttpRequest.responseXML;
-            volume = doc.getElementsByTagName("volume")[0].getElementsByTagName("actualvolume")[0].firstChild.nodeValue;
-            console.log(volume)
+            count = doc.getElementsByTagName("volume")[0].getElementsByTagName("actualvolume")[0].firstChild.nodeValue;
+            console.log(count)
+            // count = volume;
         }
     };
-    return volume
     xmlHttpRequest.send(null);
+    return count
+}
+
+var count = 0;
+
+const apiCall = (endpoint, bodyOfRequest) => {
+	console.log("Endpoint : " + endpoint + "\n" + "Body of Request : " + bodyOfRequest)
+	fetch(apis.boseSoundTouch.getUrl(endpoint), {method: 'post', body: bodyOfRequest})
+        .then(response => response.text())
+        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+        .then(data => console.log(data))	
 }
 
 const power = () => {
@@ -91,12 +91,14 @@ const spotify = () => {
 };
 
 const volUp = () => {
+    // count = getVolume('volume')
 	console.log('volUp');
 	var bodyOfRequest =  apis.boseSoundTouch.getVolumeUrlBody('volume', count++)
 	apiCall('volume', bodyOfRequest)
 };
 
 const volDown = () => {
+    // count = getVolume('volume')
 	console.log('volDown');
 	var bodyOfRequest =  apis.boseSoundTouch.getVolumeUrlBody('volume', count--)
 	apiCall('volume', bodyOfRequest)
