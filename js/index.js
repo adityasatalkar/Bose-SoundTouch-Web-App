@@ -1,4 +1,8 @@
 const powerButton = document.getElementById('power');
+const playButton = document.getElementById('play-song');
+const pauseButton = document.getElementById('pause-song');
+const nextSongButton = document.getElementById('next-song');
+const prevSongButton = document.getElementById('prev-song');
 const sourceButton = document.getElementById('source');
 const bluetoothButton = document.getElementById('bluetooth');
 const volUpButton = document.getElementById('vol-up');
@@ -22,8 +26,8 @@ let apis = {
         getBluetoothUrlBody:(source) => {
             return "<ContentItem source=" + source + "></ContentItem>"
         },
-        getPowerUrlBody:(state, sender) => {
-        	return "<key state=" + state + " sender=" + sender + ">POWER</key>"
+        getKeyUrlBody:(state, sender, key) => {
+        	return "<key state=" + state + " sender=" + sender + ">" + key + "</key>"
         }
     }
 };
@@ -60,7 +64,8 @@ const power = () => {
 	console.log('power');
 	var state = "press"
 	var sender = "Gabbo"
-	var bodyOfRequest = apis.boseSoundTouch.getPowerUrlBody(state,sender)
+    var key = "POWER"
+	var bodyOfRequest = apis.boseSoundTouch.getKeyUrlBody(state,sender,key)
 	apiCall('key', bodyOfRequest)
 };
 
@@ -80,6 +85,47 @@ const bluetooth = () => {
     var bodyOfRequest = apis.boseSoundTouch.getBluetoothUrlBody(source)
     apiCall('select', bodyOfRequest)
 };
+
+const playSong = () => {
+    // <key state="press" sender="Gabbo">PLAY</key>
+    console.log('playSong');
+    var state = "press"
+    var sender = "Gabbo"
+    var key = "PLAY"
+    var bodyOfRequest = apis.boseSoundTouch.getKeyUrlBody(state,sender,key)
+    apiCall('key', bodyOfRequest)
+};
+
+const pauseSong = () => {
+    // <key state="press" sender="Gabbo">PAUSE</key>
+    console.log('pauseSong');
+    var state = "press"
+    var sender = "Gabbo"
+    var key = "PAUSE"
+    var bodyOfRequest = apis.boseSoundTouch.getKeyUrlBody(state,sender,key)
+    apiCall('key', bodyOfRequest)
+};
+
+const nextSong = () => {
+    // <key state="press" sender="Gabbo">NEXT_TRACK</key>
+    console.log('nextSong');
+    var state = "press"
+    var sender = "Gabbo"
+    var key = "NEXT_TRACK"
+    var bodyOfRequest = apis.boseSoundTouch.getKeyUrlBody(state,sender,key)
+    apiCall('key', bodyOfRequest)
+};
+
+const prevSong = () => {
+    // <key state="press" sender="Gabbo">PREV_TRACK</key>
+    console.log('prevSong');
+    var state = "press"
+    var sender = "Gabbo"
+    var key = "PREV_TRACK"
+    var bodyOfRequest = apis.boseSoundTouch.getKeyUrlBody(state,sender,key)
+    apiCall('key', bodyOfRequest)
+};
+
 
 const spotify = () => {
     // <ContentItem source="SPOTIFY" sourceAccount=""></ContentItem>
@@ -111,6 +157,10 @@ const volMute = () => {
 };
 
 powerButton.addEventListener('click', power);
+playButton.addEventListener('click', playSong);
+pauseButton.addEventListener('click', pauseSong);
+nextSongButton.addEventListener('click', nextSong);
+prevSongButton.addEventListener('click', prevSong);
 sourceButton.addEventListener('click', source);
 bluetoothButton.addEventListener('click', bluetooth);
 volUpButton.addEventListener('click', volUp);
